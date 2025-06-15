@@ -11,7 +11,7 @@ jobs:
         with:
           node-version: 22
       - name: Install dependencies
-        run: npm ci
+        run: npm init @eslint/config
       - name: Run ESLint
         run: npx eslint .
       - name: Run tests
