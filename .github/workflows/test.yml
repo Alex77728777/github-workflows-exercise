@@ -1,0 +1,34 @@
+name: Test Project
+on: [push,workflow_dispatch]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+      - name: Install node js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm ci
+      - name: Run lint
+        run: npm run lint
+      - name: Run tests
+        run: npm test
+  deploy:
+    needs: test  ## Implicit dependency on test job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+      - name: Install node js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Project
+        run: npm run build
+      - name: Immitate deployment
+        run: echo "Deploying..."
