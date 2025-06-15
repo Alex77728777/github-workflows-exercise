@@ -4,31 +4,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Get the code
-        uses: actions/checkout@v4
-      - name: Install node js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Install dependencies
-        run: npm init @eslint/config
-      - name: Run ESLint
-        run: npx eslint .
-      - name: Run tests
-        run: npm test
-  deploy:
-    needs: test  ## Implicit dependency on test job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get the code
-        uses: actions/checkout@v4
-      - name: Install node js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
+      - name: Get code
+        uses: actions/checkout@v3
       - name: Install dependencies
         run: npm ci
-      - name: Build Project
+      - name: Lint
+        run: npm run lint
+      - name: Test code
+        run: npm run test
+      - name: Build code
         run: npm run build
-      - name: Immitate deployment
+      - name: Deploy code
         run: echo "Deploying..."
